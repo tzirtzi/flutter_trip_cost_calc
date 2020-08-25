@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart'; //listEquals
 
 class FuelForm extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _FuelFormState extends State<FuelForm> {
   String _consumption = "";
   String _distanceUnit = "";
   String _volumeUnit = "";
-  //String _validationElement = "";
+  List<String> _validationElement = [""];
 
   final _currencies = ['Dollars', 'Euro', 'Pounds', 'Yen'];
   final _consumptionChoices = <String>[
@@ -49,13 +50,34 @@ class _FuelFormState extends State<FuelForm> {
     });
   }
 
-  // void _validate() {
-  //   if (distanceController.text == '') {
+  void _validate() {
+    setState(() {
+      _validationElement = []; //initialize validation stack
+    });
 
-  //   }
-  // }
+    if (distanceController.text == '') {
+      setState(() {
+        _validationElement.add('distance');
+      });
+    }
+
+    if (fuelController.text == '') {
+      setState(() {
+        _validationElement.add('fuel');
+      });
+    }
+
+    if (consumptionController.text == '') {
+      setState(() {
+        _validationElement.add('consumption');
+      });
+    }
+  }
 
   String _calculate() {
+
+    if ( listEquals( _validationElement, [""]) == true ) { return "";}
+    
     // use String.replaceAll to convert , with correct decimal .
     double _distance =
         double.parse(distanceController.text.replaceAll(',', '.'));
@@ -165,6 +187,9 @@ class _FuelFormState extends State<FuelForm> {
                             labelText:
                                 _getDistanceLabel(), // "Trip Distance (${this._distanceUnit})",
                             labelStyle: textStyle,
+                            errorText: _validationElement.contains('distance')
+                                ? 'Value Can\'t Be Empty'
+                                : null,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
                       )),
@@ -182,6 +207,10 @@ class _FuelFormState extends State<FuelForm> {
                               labelText:
                                   _getConsumptionLabel(), // "${this._distanceUnit} per ${this._volumeUnit} of fuel",
                               labelStyle: textStyle,
+                              errorText:
+                                  _validationElement.contains('consumption')
+                                      ? 'Value Can\'t Be Empty'
+                                      : null,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0))),
                         )),
@@ -217,6 +246,9 @@ class _FuelFormState extends State<FuelForm> {
                               hintText: "e.g. 1.60",
                               labelText: "Fuel Cost",
                               labelStyle: textStyle,
+                              errorText: _validationElement.contains('fuel')
+                                  ? 'Value Can\'t Be Empty'
+                                  : null,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0))),
                         )),
@@ -246,6 +278,7 @@ class _FuelFormState extends State<FuelForm> {
                       color: Theme.of(context).primaryColorDark,
                       textColor: Theme.of(context).primaryColorLight,
                       onPressed: () {
+                        _validate();
                         setState(() {
                           result = _calculate();
                         });
