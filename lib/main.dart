@@ -102,7 +102,7 @@ class _FuelFormState extends State<FuelForm> {
             key: _formKey,
             child: Container(
               padding: EdgeInsets.all(15.0),
-              child: Column(
+              child: ListView( // Column(  /*Replaced column with ListView to fix landscape rotation */
                 children: <Widget>[
                   Padding(
                       padding: EdgeInsets.only(
