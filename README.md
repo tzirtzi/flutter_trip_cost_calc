@@ -1,9 +1,17 @@
 # trip_cost_calculator
 
-A new Flutter project.
+The project implements a simple trip cost calculator (for fuel only)
+
 
 ## Getting Started
 
+The project implements a simple trip calculator with : 
+- Multiple currencies
+- Automatic change of units (kg / mi or lt / gal based on currency)
+- Two ways to enter consumption ( distance per unit of fuel or fuel units per 100 distance)
+- Handling of both , or . as decimal marks
+- Landscape rotation is supported
+- 
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
