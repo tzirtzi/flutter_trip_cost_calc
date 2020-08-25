@@ -11,8 +11,8 @@ The project implements a simple trip calculator with :
 - Two ways to enter consumption ( distance per unit of fuel or fuel units per 100 distance)
 - Handling of both , or . as decimal marks
 - Landscape rotation is supported
-- 
-This project is a starting point for a Flutter application.
+
+
 
 A few resources to get you started if this is your first Flutter project:
 
